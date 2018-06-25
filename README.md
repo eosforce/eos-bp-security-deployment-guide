@@ -51,7 +51,7 @@ Slave 部署节点与 Master 部署节点, 每个对应的节点配置一致, �
 
 * Public Node 和 Secret Node 均至少各两台, 避免出现单点故障问题.
 
-* Public Node 的 RPC 端口不直接对外提供服务, 而是使用 resty-gate 做代理, resty-gate 为一个基于 OpenResty 开发的项目, 用于对 RPC 端口做 HTTPS 代理, 限流, 限速, 防御等.
+* Public Node 的 RPC 端口不直接对外提供服务, 而是使用 [resty-gate](https://github.com/eosforce/resty-gate) 做代理, [resty-gate](https://github.com/eosforce/resty-gate) 为一个基于 OpenResty 开发的项目, 用于对 RPC 端口做 HTTPS 代理, 限流, 限速, 防御等.
 
 ### 出块节点
 
@@ -89,18 +89,17 @@ http-server-address = 127.0.0.1:8888 #  RPC 端口监听在本地, 使用代理�
 access-control-allow-origin = *
 access-control-allow-headers = Content-Type
 access-control-allow-credentials = false
+
 p2p-listen-endpoint = 0.0.0.0:9876 # 实际部署时换成其他随机端口.
 p2p-server-address = <public ip>:9876 # 实际部署时换成其他随机端口.
 p2p-peer-address = xx.xx.xx.xx:9876 # 自己的 BP 以及其他 BP 的同步节点
 max-clients = 25 # 可根据自己机器配置情况来调大, 但不建议过大.
+
 get-actions-on=true
+
 plugin = eosio::chain_api_plugin
 plugin = eosio::history_plugin
 plugin = eosio::history_api_plugin
-plugin = eosio::faucet_testnet_plugin # 如果想提供 faucet 服务, 可以进行下面配置, 否则不填. 该值可根据自己的情况调大来防止恶意创建账号.
-faucet-create-interval-ms = 1000
-faucet-name = account_name
-faucet-private-key = ["pubkey", "privkey"]
 ```
 
 ## 参考
