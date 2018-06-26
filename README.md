@@ -84,7 +84,6 @@ signature-provider = <pubkey>=KEY:<privkey>
 #### config.ini
 
 ```ini
-filter-on = *
 http-server-address = 127.0.0.1:8888 #  RPC 端口监听在本地, 使用代理对外提供服务.
 access-control-allow-origin = *
 access-control-allow-headers = Content-Type
@@ -95,7 +94,10 @@ p2p-server-address = <public ip>:9876 # 实际部署时换成其他随机端口.
 p2p-peer-address = xx.xx.xx.xx:9876 # 自己的 BP 以及其他 BP 的同步节点
 max-clients = 25 # 可根据自己机器配置情况来调大, 但不建议过大.
 
-get-actions-on=true
+# 设置 filter-on = *, get-actions-on = true 可以获取全部的交易记录
+# 这两个配置项一般用于浏览器，钱包等
+filter-on = *
+get-actions-on = true
 
 plugin = eosio::chain_api_plugin
 plugin = eosio::history_plugin
