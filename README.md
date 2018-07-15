@@ -89,17 +89,31 @@ access-control-allow-origin = *
 access-control-allow-headers = Content-Type
 access-control-allow-credentials = false
 
-p2p-listen-endpoint = 0.0.0.0:9876 # 实际部署时换成其他随机端口.
-p2p-server-address = <public ip>:9876 # 实际部署时换成其他随机端口.
-p2p-peer-address = xx.xx.xx.xx:9876 # 自己的 BP 以及其他 BP 的同步节点
-max-clients = 25 # 可根据自己机器配置情况来调大, 但不建议过大.
+# 实际部署时换成其他随机端口.
+p2p-listen-endpoint = 0.0.0.0:9876
+
+# 实际部署时换成其他随机端口.
+p2p-server-address = <public ip>:9876
+
+# 自己的 BP 以及其他 BP 的同步节点
+p2p-peer-address = xx.xx.xx.xx:9876
+
+# 可根据自己机器配置情况来调大, 但不建议过大.
+max-clients = 25
 
 # 设置 filter-on = *, get-actions-on = true 可以获取全部的交易记录
 # 这两个配置项一般用于浏览器，钱包等
 filter-on = *
 get-actions-on = true
 
+# 当启用的插件比较多并开启 get-actions-on = true 时需要适当增大 chain-state-db-size-mb，
+# 否则可能因为 state 目录容量不大导致同步节点无法同步。
+chain-state-db-size-mb = 10240
+
+# chain_api_plugin 用于 RPC 服务
 plugin = eosio::chain_api_plugin
+
+# filter-on 和 get-actions-on 两个配置项需要启用 history_plugin
 plugin = eosio::history_plugin
 plugin = eosio::history_api_plugin
 ```
