@@ -13,6 +13,7 @@
         * [其他](#其他)
     * [同步节点](#同步节点)
         * [config.ini](#configini)
+        * [选配插件](#选配插件)
 * [参考](#参考)
 
 <!-- vim-markdown-toc -->
@@ -55,6 +56,12 @@ Slave 部署节点与 Master 部署节点, 每个对应的节点配置一致, �
 * Public Node 的 RPC 端口不直接对外提供服务, 而是使用 [resty-gate](https://github.com/eosforce/resty-gate) 做代理, [resty-gate](https://github.com/eosforce/resty-gate) 为一个基于 OpenResty 开发的项目, 用于对 RPC 端口做 HTTPS 代理, 限流, 限速, 防御等.
 
 ### 出块节点
+
+出块节点只配置 `chain_api_plugin`:
+
+```ini
+plugin = eosio::chain_api_plugin
+```
 
 #### 出块私钥
 
@@ -105,18 +112,24 @@ p2p-peer-address = xx.xx.xx.xx:9876
 
 # 可根据自己机器配置情况来调大, 但不建议过大.
 max-clients = 25
+```
 
-# 设置 filter-on = *, get-actions-on = true 可以获取全部的交易记录
-# 这两个配置项一般用于浏览器，钱包等
-filter-on = *
-get-actions-on = true
+#### 选配插件
 
+同步节点可以按需配置一些插件:
+
+```ini
 # 当启用的插件比较多并开启 get-actions-on = true 时需要适当增大 chain-state-db-size-mb，
 # 否则可能因为 state 目录容量不大导致同步节点无法同步。
 chain-state-db-size-mb = 10240
 
 # chain_api_plugin 用于 RPC 服务
 plugin = eosio::chain_api_plugin
+
+# 设置 filter-on = *, get-actions-on = true 可以获取全部的交易记录
+# 这两个配置项一般用于浏览器，钱包等
+filter-on = *
+get-actions-on = true
 
 # filter-on 和 get-actions-on 两个配置项需要启用 history_plugin
 plugin = eosio::history_plugin
