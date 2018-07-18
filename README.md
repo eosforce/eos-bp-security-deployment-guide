@@ -7,6 +7,7 @@
     * [架构图](#架构图)
     * [架构说明](#架构说明)
     * [出块节点](#出块节点)
+        * [出块私钥](#出块私钥)
         * [屏蔽 RPC](#屏蔽-rpc)
         * [限制 P2P](#限制-p2p)
         * [其他](#其他)
@@ -54,6 +55,10 @@ Slave 部署节点与 Master 部署节点, 每个对应的节点配置一致, �
 * Public Node 的 RPC 端口不直接对外提供服务, 而是使用 [resty-gate](https://github.com/eosforce/resty-gate) 做代理, [resty-gate](https://github.com/eosforce/resty-gate) 为一个基于 OpenResty 开发的项目, 用于对 RPC 端口做 HTTPS 代理, 限流, 限速, 防御等.
 
 ### 出块节点
+
+#### 出块私钥
+
+在执行 `updatebp` 注册 BP 时，参数 `block_signing_key` 不要填写账户私钥，即不要填 active 或 owner key，而要单独创建一对新的秘钥用于出块。
 
 #### 屏蔽 RPC
 
